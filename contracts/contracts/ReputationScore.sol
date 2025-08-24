@@ -3,15 +3,12 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 /**
  * @title ReputationScore
  * @dev ERC20-style reputation points system for AI Twins
  * Users earn reputation through interactions, transactions, and social activities
  */
 contract ReputationScore is ERC20, Ownable {
-    using Counters for Counters.Counter;
     
     // Mapping from user address to reputation data
     mapping(address => ReputationData) public userReputation;

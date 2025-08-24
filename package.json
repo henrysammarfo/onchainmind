@@ -32,5 +32,11 @@
     "frontend",
     "backend",
     "contracts"
-  ]
+  ],
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0",
+    "cors": "^2.8.5",
+    "js-tiktoken": "^1.0.21",
+    "jsonwebtoken": "^9.0.2"
+  }
 }

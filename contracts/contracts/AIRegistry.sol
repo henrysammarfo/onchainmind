@@ -2,17 +2,13 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 /**
  * @title AIRegistry
  * @dev Central registry for AI Twin metadata, embeddings, and user mapping
  * Stores AI twin information and manages the ecosystem
  */
 contract AIRegistry is Ownable {
-    using Counters for Counters.Counter;
-    
-    Counters.Counter private _aiTwinCounter;
+    uint256 private _aiTwinCounter;
     
     // AI Twin metadata structure
     struct AITwinMetadata {
@@ -76,8 +72,8 @@ contract AIRegistry is Ownable {
         require(nameToTokenId[name] == 0, "Name already taken");
         require(userToAITwin[owner] == 0, "User already has an AI Twin");
         
-        _aiTwinCounter.increment();
-        uint256 tokenId = _aiTwinCounter.current();
+        _aiTwinCounter++;
+        uint256 tokenId = _aiTwinCounter;
         
         aiTwinRegistry[tokenId] = AITwinMetadata({
             tokenId: tokenId,
@@ -273,7 +269,7 @@ contract AIRegistry is Ownable {
      * @return Total count of AI Twins
      */
     function getTotalAITwins() external view returns (uint256) {
-        return _aiTwinCounter.current();
+        return _aiTwinCounter;
     }
     
     /**

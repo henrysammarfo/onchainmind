@@ -2,19 +2,15 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @title AIIdentity
  * @dev ERC721 NFT representing an AI Twin for each user
  * Each AI Twin learns from wallet activity and on-chain behavior
  */
-contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
-    using Counters for Counters.Counter;
-    
-    Counters.Counter private _tokenIds;
+contract AIIdentity is ERC721, Ownable {
+    uint256 private _tokenIds;
     
     // Mapping from user address to token ID
     mapping(address => uint256) public userToTokenId;
@@ -60,8 +56,8 @@ contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
         require(userToTokenId[user] == 0, "User already has an AI Twin");
         require(bytes(name).length > 0, "Name cannot be empty");
         
-        _tokenIds.increment();
-        uint256 newTokenId = _tokenIds.current();
+        _tokenIds++;
+        uint256 newTokenId = _tokenIds;
         
         _mint(user, newTokenId);
         
@@ -96,7 +92,7 @@ contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
         string memory personality,
         string[] memory traits
     ) external {
-        require(_exists(tokenId), "Token does not exist");
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
         require(ownerOf(tokenId) == msg.sender || msg.sender == owner(), "Not authorized");
         
         aiTwinData[tokenId].name = name;
@@ -112,7 +108,7 @@ contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
      * @param newReputation The new reputation score
      */
     function updateReputation(uint256 tokenId, uint256 newReputation) external onlyOwner {
-        require(_exists(tokenId), "Token does not exist");
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
         
         aiTwinData[tokenId].reputation = newReputation;
         aiTwinData[tokenId].lastInteraction = block.timestamp;
@@ -126,7 +122,7 @@ contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
      * @param score The activity score to add
      */
     function addActivityScore(uint256 tokenId, uint256 score) external onlyOwner {
-        require(_exists(tokenId), "Token does not exist");
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
         
         aiTwinData[tokenId].activityScores.push(score);
         aiTwinData[tokenId].lastInteraction = block.timestamp;
@@ -138,7 +134,7 @@ contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
      * @return AI Twin data structure
      */
     function getAITwinData(uint256 tokenId) external view returns (AITwinData memory) {
-        require(_exists(tokenId), "Token does not exist");
+        require(_ownerOf(tokenId) != address(0), "Token does not exist");
         return aiTwinData[tokenId];
     }
     
@@ -165,22 +161,10 @@ contract AIIdentity is ERC721, ERC721URIStorage, Ownable {
      * @return Total number of AI Twins minted
      */
     function totalSupply() external view returns (uint256) {
-        return _tokenIds.current();
+        return _tokenIds;
     }
     
     // Override required functions
-    function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
-        return super.tokenURI(tokenId);
-    }
-    
-    function _update(address to, uint256 tokenId, address auth) internal override(ERC721, ERC721URIStorage) returns (address) {
-        return super._update(to, tokenId, auth);
-    }
-    
-    function _increaseBalance(address account, uint128 value) internal override(ERC721, ERC721URIStorage) {
-        super._increaseBalance(account, value);
-    }
-    
     function _baseURI() internal pure override returns (string memory) {
         return "https://onchainmind.com/api/ai-twin/";
     }

@@ -1,5 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -15,8 +15,8 @@ module.exports = {
   networks: {
     // Circle Layer Testnet
     circleLayer: {
-      url: process.env.CIRCLE_LAYER_RPC_URL || "https://testnet.circle.com/rpc",
-      chainId: 1234, // Replace with actual Circle Layer testnet chain ID
+      url: process.env.CIRCLE_LAYER_RPC_URL || "https://testnet-rpc.circlelayer.com",
+      chainId: 28525, // Circle Layer testnet chain ID
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       gasPrice: 1000000000, // 1 gwei
       gas: 6000000

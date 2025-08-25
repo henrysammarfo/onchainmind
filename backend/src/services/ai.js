@@ -16,18 +16,21 @@ class AIService {
 
   async initialize() {
     try {
-      // Initialize OpenAI LLM
-      this.llm = new ChatOpenAI({
-        openAIApiKey: process.env.OPENAI_API_KEY,
-        modelName: process.env.OPENAI_MODEL || 'gpt-4',
-        temperature: 0.7,
-        maxTokens: 1000
-      });
+      // Initialize OpenAI LLM (with fallback for demo)
+      if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'demo-key') {
+        this.llm = new ChatOpenAI({
+          openAIApiKey: process.env.OPENAI_API_KEY,
+          modelName: process.env.OPENAI_MODEL || 'gpt-4',
+          temperature: 0.7,
+          maxTokens: 1000
+        });
 
-      // Initialize OpenAI embeddings
-      this.embeddings = new OpenAIEmbeddings({
-        openAIApiKey: process.env.OPENAI_API_KEY
-      });
+        this.embeddings = new OpenAIEmbeddings({
+          openAIApiKey: process.env.OPENAI_API_KEY
+        });
+      } else {
+        console.log('⚠️ OpenAI API key not configured, using mock responses');
+      }
 
       console.log('✅ AI Service initialized successfully');
     } catch (error) {
@@ -73,6 +76,11 @@ class AIService {
    */
   async createKnowledgeBase(userId, data) {
     try {
+      if (!this.embeddings) {
+        console.log('⚠️ Embeddings not available, skipping knowledge base creation');
+        return;
+      }
+      
       const textSplitter = new RecursiveCharacterTextSplitter({
         chunkSize: 1000,
         chunkOverlap: 200
@@ -102,15 +110,37 @@ class AIService {
     try {
       const aiTwin = this.aiTwinPersonalities.get(userId);
       if (!aiTwin) {
-        throw new Error('AI Twin not found for user');
+        // Create a default AI Twin for demo
+        await this.createAITwin(userId, {
+          name: 'Demo AI Twin',
+          personality: 'A helpful and knowledgeable AI companion',
+          traits: ['Intelligent', 'Helpful', 'Blockchain-savvy'],
+          skills: ['Blockchain Analysis', 'DeFi', 'NFTs']
+        });
+        return this.generateResponse(userId, message, context);
       }
 
-      // Get relevant context from knowledge base
-      let relevantContext = '';
-      if (this.vectorStores.has(userId)) {
-        const vectorStore = this.vectorStores.get(userId);
-        const results = await vectorStore.similaritySearch(message, 3);
-        relevantContext = results.map(doc => doc.pageContent).join('\n');
+      // If OpenAI is not configured, return a mock response
+      if (!this.llm) {
+        const mockResponses = [
+          `Hello! I'm ${aiTwin.name}, your AI Twin. I understand you said: "${message}". As your AI companion, I'm here to help you navigate the blockchain world and grow your reputation!`,
+          `That's an interesting question about "${message}". Based on my analysis of blockchain trends, I can help you understand this better. What specific aspect would you like to explore?`,
+          `I see you're asking about "${message}". As your AI Twin, I've been learning from your interactions. This relates to some patterns I've noticed in your activity. Would you like me to elaborate?`,
+          `Great question! Regarding "${message}", I think this is a perfect opportunity to discuss how this impacts your onchain reputation and future opportunities.`
+        ];
+        
+        const randomResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+        this.storeConversation(userId, message, randomResponse);
+        
+        return {
+          response: randomResponse,
+          aiTwinName: aiTwin.name,
+          timestamp: new Date().toISOString(),
+          context: {
+            relevantContext: 'Demo mode - using mock responses',
+            conversationLength: (this.conversationHistory.get(userId) || []).length + 1
+          }
+        };
       }
 
       // Get conversation history
@@ -245,6 +275,11 @@ Generate a response that ${aiTwin.name} would give:
    */
   async updateAITwinKnowledge(userId, userMessage, aiResponse, context) {
     try {
+      if (!this.embeddings) {
+        console.log('⚠️ Embeddings not available, skipping knowledge update');
+        return;
+      }
+      
       // Add new interaction to knowledge base
       const newInteraction = {
         userMessage,
@@ -278,6 +313,14 @@ Generate a response that ${aiTwin.name} would give:
       const aiTwin = this.aiTwinPersonalities.get(userId);
       if (!aiTwin) {
         throw new Error('AI Twin not found for user');
+      }
+
+      if (!this.llm) {
+        return {
+          analysis: `As ${aiTwin.name}, I've analyzed your wallet activity. While I'm currently in demo mode, I can see patterns in your blockchain interactions that suggest you're actively engaged with DeFi protocols and NFT collections. This shows a strong understanding of the ecosystem!`,
+          aiTwinName: aiTwin.name,
+          timestamp: new Date().toISOString()
+        };
       }
 
       const analysisPrompt = PromptTemplate.fromTemplate(`

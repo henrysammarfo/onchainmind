@@ -6,7 +6,7 @@ class WebSocketClient {
   private userId: string | null = null;
 
   constructor() {
-    this.url = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:5000';
+    this.url = process.env.NEXT_PUBLIC_WS_URL || 'http://localhost:5000';
   }
 
   connect(userId: string): void {
@@ -15,25 +15,31 @@ class WebSocketClient {
     }
 
     this.userId = userId;
-    this.socket = io(this.url, {
-      transports: ['websocket', 'polling'],
-      timeout: 20000,
-    });
+    
+    try {
+      this.socket = io(this.url, {
+        transports: ['websocket', 'polling'],
+        timeout: 20000,
+        forceNew: true,
+      });
 
-    this.socket.on('connect', () => {
-      console.log('WebSocket connected');
-      if (this.userId) {
-        this.socket?.emit('join-user-room', this.userId);
-      }
-    });
+      this.socket.on('connect', () => {
+        console.log('WebSocket connected');
+        if (this.userId) {
+          this.socket?.emit('join-user-room', this.userId);
+        }
+      });
 
-    this.socket.on('disconnect', () => {
-      console.log('WebSocket disconnected');
-    });
+      this.socket.on('disconnect', () => {
+        console.log('WebSocket disconnected');
+      });
 
-    this.socket.on('connect_error', (error) => {
-      console.error('WebSocket connection error:', error);
-    });
+      this.socket.on('connect_error', (error) => {
+        console.error('WebSocket connection error:', error);
+      });
+    } catch (error) {
+      console.error('Failed to initialize WebSocket:', error);
+    }
   }
 
   disconnect(): void {

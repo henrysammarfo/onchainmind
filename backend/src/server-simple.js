@@ -76,6 +76,22 @@ app.get('/api/ai-twin/:userId', (req, res) => {
   res.json(aiTwin);
 });
 
+// Mock create AI Twin endpoint
+app.post('/api/ai-twin', (req, res) => {
+  const { name, personality, traits, skills } = req.body;
+  const aiTwin = {
+    id: Date.now().toString(),
+    name,
+    personality,
+    traits: [...(traits || []), ...(skills || [])].filter(Boolean),
+    reputation: 100,
+    createdAt: new Date().toISOString(),
+    lastInteraction: new Date().toISOString(),
+    activityScores: [100]
+  };
+  res.status(201).json(aiTwin);
+});
+
 // Mock reputation endpoint
 app.get('/api/reputation/:userId', (req, res) => {
   const { userId } = req.params;
@@ -92,7 +108,7 @@ app.get('/api/reputation/:userId', (req, res) => {
 });
 
 // Mock leaderboard endpoint
-app.get('/api/reputation/leaderboard', (req, res) => {
+app.get('/api/leaderboard', (req, res) => {
   const leaderboard = [
     { address: '0x1234...5678', score: 1500, level: 5, name: 'CryptoMaster' },
     { address: '0x2345...6789', score: 1200, level: 4, name: 'BlockchainPro' },
@@ -101,10 +117,49 @@ app.get('/api/reputation/leaderboard', (req, res) => {
   res.json(leaderboard);
 });
 
+// Mock chat history endpoint
+app.get('/api/chat/:userId', (req, res) => {
+  const chatHistory = [
+    {
+      id: '1',
+      message: 'Hello, how can I help you today?',
+      response: 'I\'m here to help you with blockchain questions!',
+      timestamp: new Date().toISOString(),
+      aiTwinId: '1'
+    }
+  ];
+  res.json(chatHistory);
+});
+
+// Mock user profile endpoint
+app.get('/api/user/:userId', (req, res) => {
+  const { userId } = req.params;
+  const userProfile = {
+    id: userId,
+    address: userId,
+    username: 'DemoUser',
+    createdAt: new Date().toISOString(),
+    lastActive: new Date().toISOString(),
+    preferences: {
+      theme: 'dark',
+      notifications: true
+    }
+  };
+  res.json(userProfile);
+});
+
 // Mock chat endpoint
 app.post('/api/chat', (req, res) => {
   const { message, aiTwinId, userId } = req.body;
-  const aiResponse = `Hello! I'm your AI Twin. I understand you said: "${message}". As your AI companion, I'm here to help you navigate the blockchain world and grow your reputation!`;
+  
+  const responses = [
+    `Hello! I'm your AI Twin. I understand you said: "${message}". As your AI companion, I'm here to help you navigate the blockchain world and grow your reputation!`,
+    `That's an interesting question about "${message}". Based on my analysis of blockchain trends, I can help you understand this better.`,
+    `I see you're asking about "${message}". As your AI Twin, I've been learning from your interactions. This relates to some patterns I've noticed.`,
+    `Great question! Regarding "${message}", I think this is a perfect opportunity to discuss how this impacts your onchain reputation.`
+  ];
+  
+  const aiResponse = responses[Math.floor(Math.random() * responses.length)];
   res.json({ response: aiResponse });
 });
 

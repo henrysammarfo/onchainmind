@@ -176,7 +176,7 @@ class ApiClient {
   }
 
   async getLeaderboard(): Promise<LeaderboardEntry[]> {
-    const response = await this.client.get('/api/reputation/leaderboard');
+    const response = await this.client.get('/api/leaderboard');
     return response.data;
   }
 

@@ -1,485 +1,189 @@
-# OnchainMind - AI-powered Onchain Identity & SocialFi dApp
+# CircleLayer Frontend
 
-> **Revolutionary dApp where each user has an AI-powered onchain "AI Twin" NFT that learns from wallet activity and provides personalized insights on Circle Layer**
+A modern, professional-grade frontend for the CircleLayer AI-Powered Onchain Identity & SocialFi dApp, built with Next.js 14, TypeScript, and TailwindCSS.
 
-![OnchainMind Banner](https://img.shields.io/badge/OnchainMind-AI%20Twin%20NFT%20dApp-blue?style=for-the-badge&logo=ethereum)
-![Circle Layer](https://img.shields.io/badge/Circle%20Layer-Testnet-green?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+## 🚀 Features
 
-## 🚀 Overview
-
-OnchainMind is a cutting-edge decentralized application that combines AI technology with blockchain identity on Circle Layer. Each user gets a unique AI Twin NFT that:
-
-- **Learns** from wallet activity and on-chain behavior
-- **Generates** personalized responses and insights
-- **Manages** reputation points through interactions
-- **Interacts** autonomously with dApps and users
-- **Evolves** based on user engagement and blockchain activity
-
-## ✨ Features
-
-### 🤖 AI Twin NFTs
-- **Unique Personalities**: Each AI Twin has distinct traits, skills, and characteristics
-- **Learning Capabilities**: AI Twins learn from wallet transactions and user interactions
-- **Personalized Responses**: Context-aware conversations based on user's blockchain history
-- **Continuous Evolution**: AI Twins improve and adapt over time
-
-### 🏆 Reputation System
-- **ERC20-style Points**: Earn reputation through interactions and activities
-- **Level Progression**: Unlock achievements and higher tiers
-- **Leaderboard Rankings**: Compete with other users in the ecosystem
-- **Social Recognition**: Build credibility within the OnchainMind community
-
-### 🔗 Circle Layer Integration
-- **Ultra-Fast Transactions**: Leverage Circle Layer's high-performance infrastructure
-- **Low Gas Fees**: Cost-effective operations for users
-- **Real-time Updates**: Instant blockchain confirmations and state changes
-- **Scalable Architecture**: Built for mass adoption
-
-### 💬 Interactive Features
-- **Live Chat Interface**: Real-time conversations with your AI Twin
-- **WebSocket Integration**: Instant updates and notifications
-- **Responsive Dashboard**: Modern, mobile-friendly user interface
-- **Social Connections**: Connect with other AI Twins and users
-
-## 🏗️ Architecture
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │    Backend      │    │   Smart         │
-│   (Next.js)     │◄──►│   (Node.js)     │◄──►│   Contracts     │
-│                 │    │                 │    │   (Solidity)    │
-│ • Wallet Connect│    │ • AI Service    │    │ • AIIdentity    │
-│ • Dashboard     │    │ • Blockchain    │    │ • Reputation    │
-│ • Chat Interface│    │ • WebSocket     │    │ • AIRegistry    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Circle Layer  │    │   OpenAI API    │    │   MetaMask      │
-│   Testnet       │    │   (LangChain)   │    │   Wallet        │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
+- **Modern Architecture**: Built with Next.js 14 App Router and TypeScript
+- **Professional UI**: Clean, responsive design with TailwindCSS and shadcn/ui components
+- **Authentication**: Complete JWT-based auth system with protected routes
+- **Real-time Integration**: Fully connected to CircleLayer backend APIs
+- **Mobile Responsive**: Optimized for all device sizes
+- **Dark Mode**: Built-in dark theme support
+- **Performance**: Optimized for speed and user experience
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **Next.js 14** - React framework with SSR
-- **TailwindCSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **Wagmi + RainbowKit** - Web3 wallet integration
-- **Socket.io Client** - Real-time communication
-
-### Backend
-- **Node.js + Express** - API server
-- **Socket.io** - WebSocket server
-- **LangChain** - AI/LLM integration
-- **OpenAI API** - GPT-4 language model
-- **Ethers.js** - Blockchain interaction
-
-### Smart Contracts
-- **Solidity 0.8.20** - Smart contract language
-- **OpenZeppelin** - Security libraries
-- **Hardhat** - Development framework
-- **Circle Layer** - High-performance L2
-
-### AI & ML
-- **LangChain** - LLM orchestration
-- **OpenAI GPT-4** - Language model
-- **Vector Embeddings** - Knowledge storage
-- **Memory Management** - Conversation history
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: TailwindCSS + shadcn/ui
+- **State Management**: React Context + Hooks
+- **HTTP Client**: Axios with interceptors
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Forms**: React Hook Form + Zod validation
 
 ## 📁 Project Structure
 
 ```
-onchainmind/
-├── contracts/                 # Smart contracts
-│   ├── contracts/            # Solidity source files
-│   │   ├── AIIdentity.sol   # AI Twin NFT contract
-│   │   ├── ReputationScore.sol # Reputation system
-│   │   └── AIRegistry.sol   # AI Twin registry
-│   ├── scripts/              # Deployment scripts
-│   ├── test/                 # Contract tests
-│   └── hardhat.config.js     # Hardhat configuration
-├── backend/                  # Node.js API server
-│   ├── src/
-│   │   ├── routes/          # API endpoints
-│   │   ├── services/        # Business logic
-│   │   ├── middleware/      # Express middleware
-│   │   └── server.js        # Main server file
-│   └── package.json
-├── frontend/                 # Next.js application
-│   ├── src/
-│   │   ├── components/      # React components
-│   │   ├── hooks/           # Custom hooks
-│   │   ├── pages/           # Next.js pages
-│   │   └── styles/          # CSS styles
-│   └── package.json
-├── ai/                       # AI scripts and logic
-├── scripts/                  # Utility scripts
-├── docs/                     # Documentation
-└── package.json              # Root package.json
+src/
+├── app/                    # Next.js App Router
+│   ├── (auth)/            # Authentication routes
+│   │   ├── signin/        # Sign in page
+│   │   └── signup/        # Sign up page
+│   ├── (dashboard)/       # Protected dashboard routes
+│   │   └── dashboard/     # Main dashboard
+│   ├── (marketing)/       # Public marketing pages
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Landing page
+├── components/             # Reusable components
+│   ├── ui/                # shadcn/ui components
+│   └── layout/            # Layout components
+├── contexts/               # React contexts
+├── lib/                    # Utilities and API client
+├── hooks/                  # Custom React hooks
+└── types/                  # TypeScript type definitions
 ```
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Node.js** 18+ and npm
-- **MetaMask** or compatible Web3 wallet
-- **Circle Layer** testnet access
-- **OpenAI API** key (for AI features)
+- Node.js 18+ 
+- npm or yarn
+- CircleLayer backend running on `http://localhost:5000`
 
-### 1. Clone Repository
+### Installation
 
-```bash
-git clone https://github.com/yourusername/onchainmind.git
-cd onchainmind
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd frontend
+   ```
 
-### 2. Install Dependencies
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```bash
-# Install all dependencies (root, frontend, backend, contracts)
-npm run install:all
+3. **Set environment variables**
+   Create a `.env.local` file:
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:5000
+   ```
 
-# Or install individually:
-npm install                    # Root dependencies
-cd frontend && npm install    # Frontend dependencies
-cd ../backend && npm install  # Backend dependencies
-cd ../contracts && npm install # Smart contract dependencies
-```
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-### 3. Environment Setup
+5. **Open your browser**
+   Navigate to `http://localhost:3000`
 
-Create `.env` files in the following locations:
+## 📱 Available Pages
 
-#### Root `.env`
-```bash
-NODE_ENV=development
-FRONTEND_URL=http://localhost:3000
-BACKEND_URL=http://localhost:5000
-```
+- **Landing Page** (`/`) - Marketing page with features and CTAs
+- **Sign In** (`/signin`) - User authentication
+- **Sign Up** (`/signup`) - User registration
+- **Dashboard** (`/dashboard`) - Main user dashboard (protected)
+- **Circles** (`/circles`) - Browse and join circles
+- **Leaderboard** (`/leaderboard`) - Reputation rankings
+- **Profile** (`/profile`) - User profile management
+- **Settings** (`/settings`) - Account settings
 
-#### Backend `.env`
-```bash
-PORT=5000
-HOST=0.0.0.0
-NODE_ENV=development
+## 🔧 Development
 
-# OpenAI Configuration
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-4
+### Available Scripts
 
-# Blockchain Configuration
-NETWORK=circleLayer
-CIRCLE_LAYER_RPC_URL=https://testnet.circle.com/rpc
-CHAIN_ID=1234
-
-# Contract Addresses (after deployment)
-REPUTATION_SCORE_ADDRESS=0x...
-AI_IDENTITY_ADDRESS=0x...
-AI_REGISTRY_ADDRESS=0x...
-
-# Optional: Private key for admin operations
-PRIVATE_KEY=your_private_key_here
-```
-
-#### Frontend `.env.local`
-```bash
-NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
-NEXT_PUBLIC_NETWORK=circleLayer
-NEXT_PUBLIC_CHAIN_ID=1234
-```
-
-### 4. Deploy Smart Contracts
-
-```bash
-cd contracts
-
-# Compile contracts
-npm run compile
-
-# Deploy to Circle Layer testnet
-npm run deploy
-
-# Or deploy to local Hardhat network
-npm run deploy:local
-```
-
-### 5. Start Development Servers
-
-```bash
-# Start both frontend and backend (from root)
-npm run dev
-
-# Or start individually:
-npm run dev:frontend    # Frontend on http://localhost:3000
-npm run dev:backend     # Backend on http://localhost:5000
-```
-
-### 6. Access the Application
-
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:5000
-- **Health Check**: http://localhost:5000/health
-
-## 🔧 Configuration
-
-### Smart Contract Configuration
-
-The smart contracts are configured through the `hardhat.config.js` file:
-
-```javascript
-networks: {
-  circleLayer: {
-    url: process.env.CIRCLE_LAYER_RPC_URL,
-    chainId: 1234, // Replace with actual Circle Layer testnet chain ID
-    accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-    gasPrice: 1000000000, // 1 gwei
-    gas: 6000000
-  }
-}
-```
-
-### AI Service Configuration
-
-Configure the AI service in `backend/src/services/ai.js`:
-
-```javascript
-this.llm = new ChatOpenAI({
-  openAIApiKey: process.env.OPENAI_API_KEY,
-  modelName: process.env.OPENAI_MODEL || 'gpt-4',
-  temperature: 0.7,
-  maxTokens: 1000
-});
-```
-
-### Frontend Configuration
-
-Configure Web3 providers in the frontend hooks:
-
-```typescript
-const { data: signer } = useSigner();
-const { data: account } = useAccount();
-const { data: network } = useNetwork();
-```
-
-## 🧪 Testing
-
-### Smart Contract Tests
-
-```bash
-cd contracts
-npm run test
-```
-
-### Backend API Tests
-
-```bash
-cd backend
-npm run test
-```
-
-### Frontend Tests
-
-```bash
-cd frontend
-npm run test
-```
-
-## 📊 Usage Examples
-
-### 1. Mint AI Twin NFT
-
-```typescript
-const aiTwinData = {
-  name: "Alice",
-  personality: "Friendly and helpful AI assistant",
-  traits: ["curious", "creative", "analytical"],
-  skills: ["blockchain analysis", "financial advice", "technical support"]
-};
-
-const result = await mintAITwin(aiTwinData);
-```
-
-### 2. Chat with AI Twin
-
-```typescript
-const response = await sendMessage("What's my current reputation score?");
-console.log(response.message);
-```
-
-### 3. Check Reputation
-
-```typescript
-const reputation = await getReputationScore();
-console.log(`Level: ${reputation.level}, Score: ${reputation.score}`);
-```
-
-### 4. Update AI Twin
-
-```typescript
-const updates = {
-  personality: "Updated personality description",
-  traits: ["new", "updated", "traits"]
-};
-
-await updateAITwin(updates);
-```
-
-## 🔒 Security Features
-
-- **Access Control**: Role-based permissions for smart contracts
-- **Input Validation**: Comprehensive validation on all inputs
-- **Rate Limiting**: API rate limiting to prevent abuse
-- **Secure Communication**: HTTPS and WSS for all communications
-- **Private Key Management**: Secure handling of cryptographic keys
-
-## 🌐 Deployment
-
-### Production Deployment
-
-1. **Smart Contracts**: Deploy to Circle Layer mainnet
-2. **Backend**: Deploy to cloud provider (AWS, GCP, Azure)
-3. **Frontend**: Deploy to Vercel, Netlify, or similar
-4. **Environment Variables**: Set production environment variables
-5. **Domain Configuration**: Configure custom domain and SSL
-
-### Environment Variables for Production
-
-```bash
-NODE_ENV=production
-FRONTEND_URL=https://yourdomain.com
-BACKEND_URL=https://api.yourdomain.com
-OPENAI_API_KEY=your_production_openai_key
-CIRCLE_LAYER_RPC_URL=https://mainnet.circle.com/rpc
-```
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript type checking
 
 ### Code Style
 
-- **JavaScript/TypeScript**: ESLint + Prettier
-- **Solidity**: Solhint + Prettier
-- **CSS**: TailwindCSS classes
-- **Git**: Conventional commits
+- **TypeScript**: Strict mode enabled
+- **ESLint**: Next.js recommended rules
+- **Prettier**: Consistent code formatting
+- **Components**: Functional components with hooks
+- **State**: React Context for global state
 
-## 📚 API Documentation
+### API Integration
 
-### REST API Endpoints
+The frontend is fully integrated with the CircleLayer backend:
 
-- `POST /api/ai-twin/mint` - Mint new AI Twin
-- `GET /api/ai-twin/:id` - Get AI Twin details
-- `PUT /api/ai-twin/:id` - Update AI Twin
-- `POST /api/chat/message` - Send chat message
-- `GET /api/reputation/leaderboard` - Get reputation leaderboard
+- **Authentication**: JWT tokens with automatic refresh
+- **Real-time Data**: Live updates from backend APIs
+- **Error Handling**: Comprehensive error management
+- **Loading States**: Proper loading indicators
+- **Offline Support**: Graceful degradation
 
-### WebSocket Events
+## 🎨 Design System
 
-- `join-user-room` - Join user's personal room
-- `chat-message` - Send/receive chat messages
-- `reputation-update` - Real-time reputation updates
+### Colors
+- **Primary**: Blue gradient (`from-blue-500 to-indigo-500`)
+- **Secondary**: Muted grays and accents
+- **Success**: Green for positive actions
+- **Warning**: Yellow for caution
+- **Error**: Red for errors and destructive actions
 
-## 🐛 Troubleshooting
+### Components
+- **Buttons**: Multiple variants (default, outline, ghost, gradient)
+- **Cards**: Consistent card layouts with borders and shadows
+- **Forms**: Accessible form inputs with validation
+- **Navigation**: Responsive navbar with mobile menu
+- **Modals**: Overlay dialogs for user interactions
 
-### Common Issues
+### Responsive Design
+- **Mobile First**: Optimized for mobile devices
+- **Breakpoints**: TailwindCSS responsive utilities
+- **Touch Friendly**: Proper touch targets and interactions
+- **Performance**: Optimized images and animations
 
-1. **Contract Deployment Fails**
-   - Check RPC URL and network configuration
-   - Verify private key has sufficient balance
-   - Check gas price and limit settings
+## 🚀 Deployment
 
-2. **AI Service Not Working**
-   - Verify OpenAI API key is valid
-   - Check API rate limits and quotas
-   - Ensure environment variables are set correctly
+### Vercel (Recommended)
 
-3. **Frontend Connection Issues**
-   - Check wallet network configuration
-   - Verify contract addresses are correct
-   - Check browser console for errors
+1. **Connect repository** to Vercel
+2. **Set environment variables** in Vercel dashboard
+3. **Deploy automatically** on git push
 
-4. **Backend Service Errors**
-   - Check environment variables
-   - Verify database connections
-   - Check log files for detailed errors
+### Other Platforms
 
-### Debug Mode
+- **Netlify**: Build command `npm run build`, publish directory `out`
+- **AWS Amplify**: Connect repository and build
+- **Docker**: Multi-stage build for containerization
 
-Enable debug logging:
+## 🤝 Contributing
 
-```bash
-# Backend
-DEBUG=* npm run dev:backend
-
-# Frontend
-NEXT_PUBLIC_DEBUG=true npm run dev:frontend
-```
-
-## 📈 Performance Optimization
-
-- **Smart Contract**: Gas optimization and efficient data structures
-- **Backend**: Caching, connection pooling, and async operations
-- **Frontend**: Code splitting, lazy loading, and optimized bundles
-- **AI Service**: Vector database optimization and response caching
-
-## 🔮 Future Roadmap
-
-### Phase 1: Core Features ✅
-- [x] AI Twin NFT minting
-- [x] Basic reputation system
-- [x] Chat interface
-- [x] Circle Layer integration
-
-### Phase 2: Advanced Features 🚧
-- [ ] Multi-chain support
-- [ ] Advanced AI capabilities
-- [ ] Social features and groups
-- [ ] Mobile application
-
-### Phase 3: Ecosystem Expansion 📋
-- [ ] AI Twin marketplace
-- [ ] Cross-dApp integrations
-- [ ] Governance system
-- [ ] Advanced analytics
+1. **Fork the repository**
+2. **Create feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit changes** (`git commit -m 'Add amazing feature'`)
+4. **Push to branch** (`git push origin feature/amazing-feature`)
+5. **Open Pull Request**
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- **Circle Layer** for the high-performance blockchain infrastructure
-- **OpenAI** for the advanced language models
-- **OpenZeppelin** for secure smart contract libraries
-- **Hardhat** for the development framework
-- **Next.js** for the React framework
+- **Documentation**: Check this README and inline code comments
+- **Issues**: Report bugs and feature requests via GitHub Issues
+- **Discussions**: Join community discussions on GitHub
+- **Email**: Contact the development team directly
 
-## 📞 Support
+## 🔮 Roadmap
 
-- **Documentation**: [docs/](docs/)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/onchainmind/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/onchainmind/discussions)
-- **Email**: support@onchainmind.com
-
-## 🌟 Star the Project
-
-If you find this project helpful, please give it a ⭐ on GitHub!
+- [ ] **Real-time Chat**: WebSocket integration for live messaging
+- [ ] **Mobile App**: React Native companion app
+- [ ] **Advanced Analytics**: User behavior tracking and insights
+- [ ] **Multi-language**: Internationalization support
+- [ ] **PWA**: Progressive Web App capabilities
+- [ ] **Advanced AI**: Enhanced AI Twin interactions
 
 ---
 
-**Built with ❤️ by the OnchainMind Team**
-
-*Revolutionizing onchain identity with AI-powered NFTs on Circle Layer*
+**Built with ❤️ by the CircleLayer Team**

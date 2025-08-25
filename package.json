@@ -1,42 +1,57 @@
 {
-  "name": "onchainmind",
+  "name": "circlelayer-frontend",
   "version": "1.0.0",
-  "description": "AI-powered Onchain Identity & SocialFi dApp on Circle Layer",
-  "main": "index.js",
+  "description": "CircleLayer - AI-Powered Onchain Identity & SocialFi dApp",
+  "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:backend": "cd backend && npm run dev",
-    "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && npm run build",
-    "test": "cd contracts && npm run test",
-    "deploy": "cd contracts && npm run deploy",
-    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ../contracts && npm install",
-    "start": "cd backend && npm start"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
+    "axios": "^1.6.7",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "framer-motion": "^11.0.8",
+    "lucide-react": "^0.344.0",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.49.3",
+    "tailwind-merge": "^2.2.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5"
   },
   "keywords": [
     "blockchain",
-    "ai",
-    "nft",
-    "circle-layer",
-    "socialfi",
-    "dapp"
+    "AI",
+    "NFT",
+    "identity",
+    "social",
+    "reputation",
+    "circles",
+    "nextjs",
+    "typescript",
+    "tailwindcss"
   ],
-  "author": "OnchainMind Team",
-  "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "workspaces": [
-    "frontend",
-    "backend",
-    "contracts"
-  ],
-  "dependencies": {
-    "@openzeppelin/contracts": "^5.4.0",
-    "cors": "^2.8.5",
-    "js-tiktoken": "^1.0.21",
-    "jsonwebtoken": "^9.0.2"
-  }
+  "author": "CircleLayer Team",
+  "license": "MIT"
 }

@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
+import { Navbar } from "@/components/layout/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CircleLayer - AI-Powered Onchain Identity & SocialFi dApp",
-  description: "Create your AI Twin NFT, build reputation through social interactions, and join exclusive circles on the fastest blockchain network.",
-  keywords: ["blockchain", "AI", "NFT", "identity", "social", "reputation", "circles"],
+  title: "OnchainMind - AI-Powered Onchain Identity & SocialFi",
+  description: "Create your AI Twin NFT, build reputation through social interactions, and join exclusive circles on Circle Layer blockchain.",
+  keywords: ["blockchain", "AI", "NFT", "identity", "social", "reputation", "circles", "Circle Layer"],
+  authors: [{ name: "OnchainMind Team" }],
+  openGraph: {
+    title: "OnchainMind - AI-Powered Onchain Identity & SocialFi",
+    description: "Create your AI Twin NFT, build reputation through social interactions, and join exclusive circles on Circle Layer blockchain.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OnchainMind - AI-Powered Onchain Identity & SocialFi",
+    description: "Create your AI Twin NFT, build reputation through social interactions, and join exclusive circles on Circle Layer blockchain.",
+  },
 };
 
 export default function RootLayout({
@@ -25,12 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Navbar />
-        {children}
+    <html lang="en" className="dark">
+      <body className={inter.className}>
+        <div className="min-h-screen bg-background text-foreground">
+          <Navbar />
+          <main>{children}</main>
+        </div>
       </body>
     </html>
   );
